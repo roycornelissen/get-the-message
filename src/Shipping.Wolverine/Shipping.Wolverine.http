@@ -1,0 +1,6 @@
+@Shipping.Wolverine_HostAddress = http://localhost:5001
+
+GET {{Shipping.Wolverine_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

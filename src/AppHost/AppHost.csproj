@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.5.1" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>14926242-bda9-4ab3-a79b-d8e755756393</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.1" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.Dapr" Version="9.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerRelations.MassTransit\CustomerRelations.MassTransit.csproj" />
+    <ProjectReference Include="..\Payments.Dapr\Payments.Dapr.csproj" />
+    <ProjectReference Include="..\Sales.NServiceBus\Sales.NServiceBus.csproj" />
+    <ProjectReference Include="..\Shipping.Wolverine\Shipping.Wolverine.csproj" />
+  </ItemGroup>
+
+</Project>

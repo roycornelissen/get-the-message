@@ -1,0 +1,6 @@
+@Sales.NServiceBus_HostAddress = http://localhost:5239
+
+GET {{Sales.NServiceBus_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
