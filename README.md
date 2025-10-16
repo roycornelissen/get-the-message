@@ -10,3 +10,31 @@ In this demo, I am comparing the following frameworks:
 - [Dapr](https://dapr.io/)
 
 The demo also shows how they can be made interoperable through using messaging standards like [CloudEvents](https://cloudevents.io/).
+
+## Flow
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Sales
+    participant Shipping
+    participant Payments
+    participant CustomerRelations
+
+    User-->>Sales: SubmitOrder (asynchronous)
+    Sales-->>Sales: OrderPlaced (event)
+    Sales-->>Sales: BuyersRemorse scope triggered
+    Sales-->>Shipping: OrderAccepted (event)
+    Sales-->>Payments: OrderAccepted (event)
+    
+    Payments-->>Shipping: PaymentReceived
+    Shipping-->>Shipping: OrderShipped
+
+    Payments-->>CustomerRelations: PaymentReceived
+    CustomerRelations-->>CustomerRelations: CustomerBecamePreferred
+    create participant EmailHandler
+    CustomerRelations-->>EmailHandler: SendPreferredCustomerEmail
+
+    EmailHandler->>EmailHandler: Draft an email
+    EmailHandler->>EmailHandler: Send email
+```

@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments.Dapr", "Payments.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerRelations.MassTransit", "CustomerRelations.MassTransit\CustomerRelations.MassTransit.csproj", "{C41130FE-FBCE-4487-A6D3-F808478263DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,18 @@ Global
 		{C41130FE-FBCE-4487-A6D3-F808478263DF}.Release|x64.Build.0 = Release|Any CPU
 		{C41130FE-FBCE-4487-A6D3-F808478263DF}.Release|x86.ActiveCfg = Release|Any CPU
 		{C41130FE-FBCE-4487-A6D3-F808478263DF}.Release|x86.Build.0 = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|x64.Build.0 = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Debug|x86.Build.0 = Debug|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|x64.ActiveCfg = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|x64.Build.0 = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|x86.ActiveCfg = Release|Any CPU
+		{402D90F2-0967-49F2-9C38-0E1EBC7AC54B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: daprConfig
+spec:
+  tracing:
+    samplingRate: "0"
+    zipkin:
+      endpointAddress: ""  # Disable Zipkin
+  features:
+    - name: SchedulerReminders
+      enabled: false  # Disable scheduler (stops port 6060 errors)
