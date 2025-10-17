@@ -1,0 +1,14 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="AppHost/AppHost.csproj" />
+  <Project Path="CustomerRelations.MassTransit/CustomerRelations.MassTransit.csproj" />
+  <Project Path="GetTheMessage.ServiceDefaults/GetTheMessage.ServiceDefaults.csproj" />
+  <Project Path="Messages/Messages.csproj" />
+  <Project Path="Payments.Dapr/Payments.Dapr.csproj" />
+  <Project Path="Sales.NServiceBus/Sales.NServiceBus.csproj" />
+  <Project Path="Shipping.Wolverine/Shipping.Wolverine.csproj" />
+</Solution>
