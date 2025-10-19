@@ -1,27 +1,12 @@
-using System.Collections.Immutable;
-using CommunityToolkit.Aspire.Hosting.Dapr;
-using Projects;
+using AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddDapr(dapr =>
-{
-    dapr.EnableTelemetry = true;
-});
+var serviceBusConnection = builder.AddConnectionString("ServiceBus");
 
-builder.AddProject<Sales_NServiceBus>("Sales-NServiceBus");
-
-builder.AddProject<CustomerRelations_MassTransit>("CustomerRelations-MassTransit");
-
-builder.AddProject<Shipping_Wolverine>("Shipping-Wolverine");
-
-builder.AddProject<Payments_Dapr>("Payments-Dapr")
-    .WithExternalHttpEndpoints()
-    .WithDaprSidecar(new DaprSidecarOptions
-    {
-        AppId = "payments-dapr",
-        ResourcesPaths = ImmutableHashSet.Create("./dapr/components"),
-        Config = "./dapr/components/config.yaml"
-    });
+builder.RunNServiceBus(serviceBusConnection);
+// builder.RunMassTransit(serviceBusConnection);
+// builder.RunWolverine(serviceBusConnection);
+//await builder.RunDapr();
 
 builder.Build().Run();

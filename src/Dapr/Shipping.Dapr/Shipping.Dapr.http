@@ -1,0 +1,6 @@
+@Shipping.Dapr_HostAddress = http://localhost:5092
+
+GET {{Shipping.Dapr_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

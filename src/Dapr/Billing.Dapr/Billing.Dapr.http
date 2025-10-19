@@ -1,0 +1,6 @@
+@Billing.Dapr_HostAddress = http://localhost:5008
+
+GET {{Billing.Dapr_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

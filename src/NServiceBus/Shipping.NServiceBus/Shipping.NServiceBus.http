@@ -1,0 +1,6 @@
+@Shipping.NServiceBus_HostAddress = http://localhost:5132
+
+GET {{Shipping.NServiceBus_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -16,10 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerRelations.MassTransit\CustomerRelations.MassTransit.csproj" />
-    <ProjectReference Include="..\Payments.Dapr\Payments.Dapr.csproj" />
-    <ProjectReference Include="..\Sales.NServiceBus\Sales.NServiceBus.csproj" />
-    <ProjectReference Include="..\Shipping.Wolverine\Shipping.Wolverine.csproj" />
+    <ProjectReference Include="..\Dapr\Billing.Dapr\Billing.Dapr.csproj" />
+    <ProjectReference Include="..\Dapr\Sales.Dapr\Sales.Dapr.csproj" />
+    <ProjectReference Include="..\Dapr\Shipping.Dapr\Shipping.Dapr.csproj" />
+    <ProjectReference Include="..\MassTransit\Billing.MassTransit\Billing.MassTransit.csproj" />
+    <ProjectReference Include="..\MassTransit\Shipping.MassTransit\Shipping.MassTransit.csproj" />
+    <ProjectReference Include="..\NServiceBus\Billing.NServiceBus\Billing.NServiceBus.csproj" />
+    <ProjectReference Include="..\NServiceBus\Sales.NServiceBus\Sales.NServiceBus.csproj" />
+    <ProjectReference Include="..\MassTransit\Sales.MassTransit\Sales.MassTransit.csproj" />
+    <ProjectReference Include="..\NServiceBus\Shipping.NServiceBus\Shipping.NServiceBus.csproj" />
+    <ProjectReference Include="..\Wolverine\Shipping.Wolverine\Shipping.Wolverine.csproj" />
   </ItemGroup>
 
 </Project>

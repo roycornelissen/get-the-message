@@ -1,6 +1,0 @@
-@CustomerRelations.MassTransit_HostAddress = http://localhost:5002
-
-GET {{CustomerRelations.MassTransit_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

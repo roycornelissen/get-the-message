@@ -1,0 +1,6 @@
+@Billing.NServiceBus_HostAddress = http://localhost:5034
+
+GET {{Billing.NServiceBus_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
