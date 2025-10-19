@@ -18,22 +18,21 @@ sequenceDiagram
     actor User
     participant Sales
     participant Shipping
-    participant Payments
-    participant CustomerRelations
+    participant Billing
 
     User-->>Sales: SubmitOrder (asynchronous)
     Sales-->>Sales: OrderPlaced (event)
     Sales-->>Sales: BuyersRemorse scope triggered
     Sales-->>Shipping: OrderAccepted (event)
-    Sales-->>Payments: OrderAccepted (event)
+    Sales-->>Billing: OrderAccepted (event)
     
-    Payments-->>Shipping: PaymentReceived
+    Billing-->>Shipping: PaymentReceived
     Shipping-->>Shipping: OrderShipped
 
-    Payments-->>CustomerRelations: PaymentReceived
-    CustomerRelations-->>CustomerRelations: CustomerBecamePreferred
+    Billing-->>Sales: PaymentReceived
+    Sales-->>Sales: CustomerBecamePreferred
     create participant EmailHandler
-    CustomerRelations-->>EmailHandler: SendPreferredCustomerEmail
+    Sales-->>EmailHandler: SendPreferredCustomerEmail
 
     EmailHandler->>EmailHandler: Draft an email
     EmailHandler->>EmailHandler: Send email
