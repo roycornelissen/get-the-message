@@ -436,3 +436,31 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
+# Rider IDE files and folders
+.idea/
+*.sln.DotSettings*
+*.DotSettings.user
+.rider/
+# Rider project model files
+**/rider.project.*
+**/*.Rider*
+# Rider caches and logs
+.rider.cache/
+.rider.log/
+# Rider workspace files
+**/.idea/
+**/.idea_modules/
+# Rider-specific user files
+**/*.user
+
+# Local .terraform directories
+.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# DO NOT add .terraform.lock.hcl to .gitignore
+# This file should be committed to ensure consistent provider versions
+

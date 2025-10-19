@@ -1,0 +1,12 @@
+# Local .terraform directories
+.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.conf
+
+# DO NOT add .terraform.lock.hcl to .gitignore
+# This file should be committed to ensure consistent provider versions
+
