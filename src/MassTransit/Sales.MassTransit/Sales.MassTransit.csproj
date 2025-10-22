@@ -7,10 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+        <PackageReference Include="MassTransit" Version="8.5.5" />
+        <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.5.5" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\CustomerServiceAgent\CustomerServiceAgent.csproj" />
       <ProjectReference Include="..\..\GetTheMessage.ServiceDefaults\GetTheMessage.ServiceDefaults.csproj" />
       <ProjectReference Include="..\..\Messages\Messages.csproj" />
     </ItemGroup>
