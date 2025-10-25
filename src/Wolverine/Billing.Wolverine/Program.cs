@@ -1,8 +1,8 @@
 using System.Text;
+using Billing.OrderPaymentHandling;
 using JasperFx;
+using Messages.Commands;
 using Messages.Events;
-using Shipping;
-using Shipping.ShippingProcess;
 using Wolverine;
 using Wolverine.AzureServiceBus;
 using Wolverine.RDBMS;
@@ -19,35 +19,36 @@ builder.Services.AddOpenApi();
 
 builder.UseWolverine(options =>
 {
-    options.AddSagaType<Order>();
-    
     options
         .UseAzureServiceBus(builder.Configuration.GetConnectionString("ServiceBus")!)
         .SystemQueuesAreEnabled(false);
+
+    options.AddSagaType<Order>();
     
     options
-        .ListenToAzureServiceBusQueue("shipping")
-        .ConfigureDeadLetterQueue("dead-letter-shipping");
+        .ListenToAzureServiceBusQueue("billing")
+        .ConfigureDeadLetterQueue("dead-letter-billing");
 
     options.Publish()
-        .MessagesFromNamespaceContaining<ShipOrder>()
-        .ToAzureServiceBusQueue("shipping");
-
-    options.PublishMessage<OrderShipped>()
-        .ToAzureServiceBusTopic("messages.events.ordershipped");
-
-    options.Discovery.IncludeAssembly(typeof(OrderShipper).Assembly);
-    Console.WriteLine(options.DescribeHandlerMatch(typeof(OrderShipper)));
+        .MessagesFromNamespaceContaining<ProcessPayment>()
+        .ToAzureServiceBusQueue("billing");
+    
+    options.PublishMessage<PaymentReceived>()
+        .ToAzureServiceBusTopic("messages.events.paymentreceived");
 });
 
 var app = builder.Build();
-
-app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+app.MapDefaultEndpoints();
+
+app.Map("/pay-order/{id:guid}",
+    (Guid id) => app.InvokeAsync(new ProcessPayment
+        { OrderId = id, TransactionReference = DateTime.UtcNow.ToString("O") })
+);
 
 return await app.RunJasperFxCommands(args);

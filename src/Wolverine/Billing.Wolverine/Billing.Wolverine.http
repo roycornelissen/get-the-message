@@ -1,0 +1,6 @@
+@Billing.Wolverine_HostAddress = http://localhost:5187
+
+GET {{Billing.Wolverine_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -67,6 +67,18 @@
   </Folder>
   <Folder Name="/Wolverine/">
     <Project Path="Wolverine/Shipping.Wolverine/Shipping.Wolverine.csproj" />
+    <Project Path="Wolverine\Billing.Wolverine\Billing.Wolverine.csproj" Type="Classic C#">
+      <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
+      <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
+      <Configuration Solution="Release|x64" Project="Release|Any CPU" />
+      <Configuration Solution="Release|x86" Project="Release|Any CPU" />
+    </Project>
+    <Project Path="Wolverine\Sales.Wolverine\Sales.Wolverine.csproj" Type="Classic C#">
+      <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
+      <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
+      <Configuration Solution="Release|x64" Project="Release|Any CPU" />
+      <Configuration Solution="Release|x86" Project="Release|Any CPU" />
+    </Project>
   </Folder>
   <Project Path="AppHost/AppHost.csproj" />
   <Project Path="CustomerServiceAgent\CustomerServiceAgent.csproj" Type="Classic C#">
