@@ -6,7 +6,8 @@ var serviceBusConnection = builder.AddConnectionString("ServiceBus");
 
 //builder.RunNServiceBus(serviceBusConnection);
 //builder.RunMassTransit(serviceBusConnection);
-builder.RunWolverine(serviceBusConnection);
-//await builder.RunDapr();
+//builder.RunWolverine(serviceBusConnection);
+
+builder.RunDaprWithRedis();
 
 builder.Build().Run();

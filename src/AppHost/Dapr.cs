@@ -1,70 +1,83 @@
-using System.Collections.Immutable;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using CommunityToolkit.Aspire.Hosting.Dapr;
-using Microsoft.Extensions.Configuration;
 using Projects;
 
 namespace AppHost;
 
 internal static class Dapr
 {
-    public static async Task RunDapr(this IDistributedApplicationBuilder builder)
+    public static void RunDaprWithRedis(this IDistributedApplicationBuilder builder)
     {
-        await TransferServiceBusConnectionStringToDaprSecrets(builder);
+        var pubSubPassword = builder.AddParameter("pubsub-password", secret: true);
 
-        builder.AddDapr(dapr =>
+        var redis = builder
+            .AddRedis("redis")
+            .WithPassword(pubSubPassword);
+        
+        var stateStore = builder
+            .AddDaprStateStore("statestore")
+            .WaitFor(redis);
+
+        var redisHost= redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Host);
+        var redisPort = redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Port);
+
+        var pubSub = builder
+            .AddDaprPubSub("pubsub")
+            .WithMetadata(
+                "redisHost",
+                ReferenceExpression.Create(
+                    $"{redisHost}:{redisPort}"
+                )
+            )
+            .WaitFor(redis);
+        
+        RunApps(builder, redis, sidecar =>
         {
-            dapr.EnableTelemetry = true;
+            sidecar
+                .WithReference(stateStore)
+                .WithReference(pubSub)
+                .WaitFor(redis);
         });
-
-        builder.AddProject<Sales_Dapr>("Sales")
-            .WithExternalHttpEndpoints()
-            .WithEnvironment("CustomerServiceAgent:ApiKey", builder.Configuration["CustomerServiceAgent:ApiKey"])
-            .WithDaprSidecar(new DaprSidecarOptions
-            {
-                AppId = "sales",
-                ResourcesPaths = ImmutableHashSet.Create("./dapr/components")
-            });
-        
-        builder.AddProject<Billing_Dapr>("Billing")
-            .WithExternalHttpEndpoints()
-            .WithDaprSidecar(new DaprSidecarOptions
-            {
-                AppId = "billing",
-                ResourcesPaths = ImmutableHashSet.Create("./dapr/components")
-            });
-        
-        builder.AddProject<Shipping_Dapr>("Shipping")
-            .WithExternalHttpEndpoints()
-            .WithDaprSidecar(new DaprSidecarOptions
-            {
-                AppId = "shipping",
-                ResourcesPaths = ImmutableHashSet.Create("./dapr/components")
-            });
     }
     
-    private static async Task TransferServiceBusConnectionStringToDaprSecrets(IDistributedApplicationBuilder distributedApplicationBuilder)
+    private static void RunApps(
+        IDistributedApplicationBuilder builder,
+        IResourceBuilder<IResource> brokerDependency,
+        Action<IResourceBuilder<IDaprSidecarResource>> configureSidecar)
     {
-        // Write the Service Bus connection string to Dapr secrets file before starting
-        var connectionStringValue = distributedApplicationBuilder.Configuration.GetConnectionString("ServiceBus");
-        if (!string.IsNullOrEmpty(connectionStringValue))
-        {
-            var secretsPath = Path.Combine(distributedApplicationBuilder.AppHostDirectory, "dapr", "components", "secrets.json");
-            var secrets = new
+        builder.AddProject<Sales_Dapr>("Sales")
+            .WithExternalHttpEndpoints()
+            .WithDaprSidecar(sidecar =>
             {
-                azure = new
+                sidecar.WithOptions(new DaprSidecarOptions
                 {
-                    servicebus = connectionStringValue
-                }
-            };
-    
-            var secretsJson = JsonSerializer.Serialize(secrets, new JsonSerializerOptions 
-            { 
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            });
-            await File.WriteAllTextAsync(secretsPath, secretsJson);
-        }
+                    AppId = "sales"
+                });
+                configureSidecar.Invoke(sidecar);
+            })
+            .WaitFor(brokerDependency);
+
+        builder.AddProject<Billing_Dapr>("Billing")
+            .WithExternalHttpEndpoints()
+            .WithDaprSidecar(sidecar =>
+            {
+                sidecar.WithOptions(new DaprSidecarOptions
+                {
+                    AppId = "billing"
+                });
+                configureSidecar.Invoke(sidecar);
+            })
+            .WaitFor(brokerDependency);
+
+        builder.AddProject<Shipping_Dapr>("Shipping")
+            .WithExternalHttpEndpoints()
+            .WithDaprSidecar(sidecar =>
+            {
+                sidecar.WithOptions(new DaprSidecarOptions
+                {
+                    AppId = "shipping"
+                });
+                configureSidecar.Invoke(sidecar);
+            })
+            .WaitFor(brokerDependency);
     }
 }
