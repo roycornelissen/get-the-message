@@ -5,19 +5,19 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Dapr/">
-    <Project Path="Dapr\Billing.Dapr\Billing.Dapr.csproj" Type="Classic C#">
+    <Project Path="Dapr\Billing.Dapr\Billing.Dapr.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="Dapr\Sales.Dapr\Sales.Dapr.csproj" Type="Classic C#">
+    <Project Path="Dapr\Sales.Dapr\Sales.Dapr.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="Dapr\Shipping.Dapr\Shipping.Dapr.csproj" Type="Classic C#">
+    <Project Path="Dapr\Shipping.Dapr\Shipping.Dapr.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
@@ -25,19 +25,19 @@
     </Project>
   </Folder>
   <Folder Name="/MassTransit/">
-    <Project Path="MassTransit\Billing.MassTransit\Billing.MassTransit.csproj" Type="Classic C#">
+    <Project Path="MassTransit\Billing.MassTransit\Billing.MassTransit.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="MassTransit\Sales.MassTransit\Sales.MassTransit.csproj" Type="Classic C#">
+    <Project Path="MassTransit\Sales.MassTransit\Sales.MassTransit.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="MassTransit\Shipping.MassTransit\Shipping.MassTransit.csproj" Type="Classic C#">
+    <Project Path="MassTransit\Shipping.MassTransit\Shipping.MassTransit.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
@@ -46,34 +46,37 @@
   </Folder>
   <Folder Name="/NServiceBus/">
     <Project Path="NServiceBus/Sales.NServiceBus/Sales.NServiceBus.csproj" />
-    <Project Path="NServiceBus\Billing.NServiceBus\Billing.NServiceBus.csproj" Type="Classic C#">
+    <Project Path="NServiceBus\Billing.NServiceBus\Billing.NServiceBus.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="NServiceBus\Conventions\Conventions.csproj" Type="Classic C#">
+    <Project Path="NServiceBus\Conventions\Conventions.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="NServiceBus\Shipping.NServiceBus\Shipping.NServiceBus.csproj" Type="Classic C#">
+    <Project Path="NServiceBus\Shipping.NServiceBus\Shipping.NServiceBus.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
   </Folder>
+  <Folder Name="/StorageQueues/">
+    <Project Path="StorageQueues/StorageQueues.csproj" Id="cfc2940f-d322-4fbc-b677-4b20409b3135" />
+  </Folder>
   <Folder Name="/Wolverine/">
     <Project Path="Wolverine/Shipping.Wolverine/Shipping.Wolverine.csproj" />
-    <Project Path="Wolverine\Billing.Wolverine\Billing.Wolverine.csproj" Type="Classic C#">
+    <Project Path="Wolverine\Billing.Wolverine\Billing.Wolverine.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
       <Configuration Solution="Release|x86" Project="Release|Any CPU" />
     </Project>
-    <Project Path="Wolverine\Sales.Wolverine\Sales.Wolverine.csproj" Type="Classic C#">
+    <Project Path="Wolverine\Sales.Wolverine\Sales.Wolverine.csproj">
       <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
       <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
       <Configuration Solution="Release|x64" Project="Release|Any CPU" />
@@ -81,7 +84,7 @@
     </Project>
   </Folder>
   <Project Path="AppHost/AppHost.csproj" />
-  <Project Path="CustomerServiceAgent\CustomerServiceAgent.csproj" Type="Classic C#">
+  <Project Path="CustomerServiceAgent\CustomerServiceAgent.csproj">
     <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
     <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
     <Configuration Solution="Release|x64" Project="Release|Any CPU" />

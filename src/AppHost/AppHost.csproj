@@ -27,6 +27,7 @@
     <ProjectReference Include="..\NServiceBus\Sales.NServiceBus\Sales.NServiceBus.csproj" />
     <ProjectReference Include="..\MassTransit\Sales.MassTransit\Sales.MassTransit.csproj" />
     <ProjectReference Include="..\NServiceBus\Shipping.NServiceBus\Shipping.NServiceBus.csproj" />
+    <ProjectReference Include="..\StorageQueues\StorageQueues.csproj" />
     <ProjectReference Include="..\Wolverine\Billing.Wolverine\Billing.Wolverine.csproj" />
     <ProjectReference Include="..\Wolverine\Sales.Wolverine\Sales.Wolverine.csproj" />
     <ProjectReference Include="..\Wolverine\Shipping.Wolverine\Shipping.Wolverine.csproj" />
