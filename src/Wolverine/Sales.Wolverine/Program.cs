@@ -8,6 +8,7 @@ using Sales.BuyersRemorse;
 using Sales.CustomerStatus;
 using Wolverine;
 using Wolverine.AzureServiceBus;
+using Wolverine.Http;
 using Wolverine.RDBMS;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -17,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ApplyJasperFxExtensions();
 
 builder.AddServiceDefaults();
+
+builder.Services.AddWolverineHttp();
 
 builder.UseWolverine(options =>
 {
@@ -60,17 +63,7 @@ if (app.Environment.IsDevelopment())
 }
 app.MapDefaultEndpoints();
 
-app.MapGet("/place-order", async (IMessageBus bus) =>
-{
-    var orderId = Guid.NewGuid();
-    await bus.SendAsync(new PlaceOrder
-    {
-        Id = orderId,
-        Amount = new Random().Next(500, 600),
-        CustomerId = Constants.DefaultCustomerId
-    });
-    return Results.Ok(orderId);
-});
+app.MapWolverineEndpoints(x => x.WarmUpRoutes = RouteWarmup.Eager);
 
 app.MapGet("/cancel/{id:guid}", async (IMessageBus bus, Guid id) =>
 {
