@@ -37,7 +37,7 @@ public class OrderBillingSaga : MassTransitStateMachine<OrderBillingState>
         During(Waiting,
             Ignore(OrderAccepted),
             When(ProcessPayment)
-                .Then(context => logger.LogInformation("💰 Order {OrderId} was paid, dispatching shipping order.",
+                .Then(context => logger.LogInformation("💰 Order {OrderId} was paid, publishing PaymentReceived event",
                     context.Message.OrderId))
                 .ThenAsync(context => context.Publish(new PaymentReceived
                 {
