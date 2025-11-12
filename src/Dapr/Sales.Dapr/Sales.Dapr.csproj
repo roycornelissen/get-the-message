@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.16.0" />
-        <PackageReference Include="Dapr.AspNetCore" Version="1.16.0" />
-        <PackageReference Include="Dapr.Messaging" Version="1.16.0" />
+        <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.16.1" />
+        <PackageReference Include="Dapr.AspNetCore" Version="1.16.1" />
+        <PackageReference Include="Dapr.Messaging" Version="1.16.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
     </ItemGroup>
 

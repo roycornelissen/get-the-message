@@ -9,9 +9,9 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
-        <PackageReference Include="WolverineFx" Version="5.0.0" />
-        <PackageReference Include="WolverineFx.AzureServiceBus" Version="5.0.0" />
-        <PackageReference Include="WolverineFx.SqlServer" Version="5.0.0" />
+        <PackageReference Include="WolverineFx" Version="5.1.0" />
+        <PackageReference Include="WolverineFx.AzureServiceBus" Version="5.1.0" />
+        <PackageReference Include="WolverineFx.SqlServer" Version="5.1.0" />
     </ItemGroup>
 
     <ItemGroup>
