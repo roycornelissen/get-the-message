@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>556f16f7-5b36-4ba7-8041-20aed7dbe7f7</UserSecretsId>
@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Azure.Identity" Version="1.17.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
         <PackageReference Include="NServiceBus" Version="9.2.7" />
         <PackageReference Include="NServiceBus.Extensions.Hosting" Version="3.0.1" />
         <PackageReference Include="NServiceBus.Extensions.Logging" Version="3.0.1" />
