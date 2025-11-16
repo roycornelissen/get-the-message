@@ -16,7 +16,9 @@ var routing = endpointConfiguration.UseTransport<AzureServiceBusTransport>(build
   
 endpointConfiguration.UsePersistence<LearningPersistence>();
 endpointConfiguration.UniquelyIdentifyRunningInstance();
+
 endpointConfiguration.ApplyNamespaceConventions();
+endpointConfiguration.ConnectToServicePlatform();
 
 builder.UseNServiceBus(endpointConfiguration);
 

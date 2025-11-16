@@ -15,12 +15,14 @@ builder.Services.AddOpenApi();
 var endpointConfiguration = new EndpointConfiguration("Sales");
 endpointConfiguration.UseSerialization<SystemJsonSerializer>();
 
-//var routing = endpointConfiguration.UseTransport<AzureServiceBusTransport>(builder.Configuration.GetConnectionString("ServiceBus")!, TopicTopology.Default);
-endpointConfiguration.UseTransport<AzureServiceBusTransport>("sbns-get-the-message.servicebus.windows.net", new DefaultAzureCredential(), TopicTopology.Default);
+var routing = endpointConfiguration.UseTransport<AzureServiceBusTransport>(builder.Configuration.GetConnectionString("ServiceBus")!, TopicTopology.Default);
+//endpointConfiguration.UseTransport<AzureServiceBusTransport>("sbns-get-the-message.servicebus.windows.net", new DefaultAzureCredential(), TopicTopology.Default);
   
 endpointConfiguration.UsePersistence<LearningPersistence>();
 endpointConfiguration.UniquelyIdentifyRunningInstance();
+
 endpointConfiguration.ApplyNamespaceConventions();
+endpointConfiguration.ConnectToServicePlatform();
 
 builder.UseNServiceBus(endpointConfiguration);
 
