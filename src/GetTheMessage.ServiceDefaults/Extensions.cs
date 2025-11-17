@@ -23,6 +23,9 @@ public static class Extensions
 
         builder.AddDefaultHealthChecks();
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         builder.Services.AddServiceDiscovery();
 
         builder.Services.ConfigureHttpClientDefaults(http =>
@@ -123,6 +126,9 @@ public static class Extensions
                 Predicate = r => r.Tags.Contains("live")
             });
         }
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         return app;
     }

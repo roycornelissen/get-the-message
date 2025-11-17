@@ -46,6 +46,7 @@ internal static class Dapr
     {
         builder.AddProject<Sales_Dapr>("Sales")
             .WithExternalHttpEndpoints()
+            .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
             {
                 sidecar.WithOptions(new DaprSidecarOptions
@@ -58,6 +59,7 @@ internal static class Dapr
 
         builder.AddProject<Billing_Dapr>("Billing")
             .WithExternalHttpEndpoints()
+            .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
             {
                 sidecar.WithOptions(new DaprSidecarOptions
@@ -70,6 +72,7 @@ internal static class Dapr
 
         builder.AddProject<Shipping_Dapr>("Shipping")
             .WithExternalHttpEndpoints()
+            .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
             {
                 sidecar.WithOptions(new DaprSidecarOptions

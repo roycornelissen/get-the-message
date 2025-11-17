@@ -8,6 +8,7 @@ internal static class StorageQueuesSetup
     public static void RunStorageQueues(this IDistributedApplicationBuilder builder)
     {
         builder
-            .AddProject<StorageQueues>("storagequeues");
+            .AddProject<StorageQueues>("storagequeues")
+            .WithUrl("/swagger");
     }
 }
