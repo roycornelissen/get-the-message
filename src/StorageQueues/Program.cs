@@ -1,5 +1,6 @@
 using Azure.Storage.Queues;
 using StorageQueues;
+using static System.Net.WebRequestMethods;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -11,8 +12,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped(sp =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("azurestorage");
+    var connectionString = builder.Configuration.GetConnectionString("sales");
     var queueName = "sales";
+    connectionString = connectionString!.Replace(";;QueueName=sales", "");
     return new QueueClient(connectionString, queueName);
 });
 builder.Services.AddScoped<OrderAcceptedHandler>();
