@@ -33,7 +33,7 @@ public class BuyersRemorseSaga(ILogger<BuyersRemorseSaga> logger): Saga<BuyersRe
         Data.CustomerId = message.CustomerId;
         Data.Amount = message.Amount;
         
-        await RequestTimeout<BuyersRemorseExpired>(context, TimeSpan.FromSeconds(15));
+        await RequestTimeout<BuyersRemorseExpired>(context, TimeSpan.FromSeconds(10));
     }
 
     public Task Handle(OrderCanceled message, IMessageHandlerContext context)

@@ -50,7 +50,7 @@ public class QueueListener(IServiceScopeFactory serviceScopeFactory) : Backgroun
             }
 
             // Some kind of backoff mechanism to avoid tight loop
-            await Task.Delay(5000, stoppingToken);
+            await Task.Delay(1000, stoppingToken);
         }
     }
 }
