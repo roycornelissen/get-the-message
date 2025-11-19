@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Sdk Name="Aspire.AppHost.Sdk" Version="13.0.0" />
 
@@ -16,6 +16,7 @@
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="13.0.0" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="13.0.0" />
     <PackageReference Include="CommunityToolkit.Aspire.Hosting.Dapr" Version="9.9.0" />
+    <PackageReference Include="Scalar.Aspire" Version="0.7.3" />
   </ItemGroup>
 
   <ItemGroup>

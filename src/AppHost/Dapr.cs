@@ -1,5 +1,6 @@
 using CommunityToolkit.Aspire.Hosting.Dapr;
 using Projects;
+using Scalar.Aspire;
 
 namespace AppHost;
 
@@ -44,7 +45,7 @@ internal static class Dapr
         IResourceBuilder<IResource> brokerDependency,
         Action<IResourceBuilder<IDaprSidecarResource>> configureSidecar)
     {
-        builder.AddProject<Sales_Dapr>("Sales")
+        var sales = builder.AddProject<Sales_Dapr>("Sales")
             .WithExternalHttpEndpoints()
             .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
@@ -57,7 +58,7 @@ internal static class Dapr
             })
             .WaitFor(brokerDependency);
 
-        builder.AddProject<Billing_Dapr>("Billing")
+        var billing = builder.AddProject<Billing_Dapr>("Billing")
             .WithExternalHttpEndpoints()
             .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
@@ -70,7 +71,7 @@ internal static class Dapr
             })
             .WaitFor(brokerDependency);
 
-        builder.AddProject<Shipping_Dapr>("Shipping")
+        var shipping = builder.AddProject<Shipping_Dapr>("Shipping")
             .WithExternalHttpEndpoints()
             .WithUrl("/swagger")
             .WithDaprSidecar(sidecar =>
@@ -82,5 +83,12 @@ internal static class Dapr
                 configureSidecar.Invoke(sidecar);
             })
             .WaitFor(brokerDependency);
+
+        builder
+            .AddScalarApiReference()
+            .WithApiReference(sales)
+            .WithApiReference(shipping)
+            .WithApiReference(billing);
+
     }
 }
