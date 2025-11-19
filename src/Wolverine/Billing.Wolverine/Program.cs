@@ -19,8 +19,9 @@ builder.Services.AddOpenApi();
 
 builder.UseWolverine(options =>
 {
+    var connectionString = builder.Configuration.GetConnectionString("ServiceBus") ?? "empty";
     options
-        .UseAzureServiceBus(builder.Configuration.GetConnectionString("ServiceBus")!)
+        .UseAzureServiceBus(connectionString)
         .SystemQueuesAreEnabled(false);
 
     options.AddSagaType<Order>();
