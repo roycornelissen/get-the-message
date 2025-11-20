@@ -1,3 +1,4 @@
+using Aspire.Hosting;
 using CommunityToolkit.Aspire.Hosting.Dapr;
 using Projects;
 using Scalar.Aspire;
@@ -10,13 +11,22 @@ internal static class Dapr
     {
         var pubSubPassword = builder.AddParameter("pubsub-password", secret: true);
 
+        builder.AddDapr(dapr =>
+        {
+            dapr.EnableTelemetry = true;
+        });
+
         var redis = builder
             .AddRedis("redis")
             .WithPassword(pubSubPassword);
-        
+
         var stateStore = builder
-            .AddDaprStateStore("statestore")
-            .WaitFor(redis);
+                .AddDaprStateStore("statestore")
+                .WithMetadata("actorStateStore", "true")
+                .WithMetadata("redisHost", redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Host).ValueExpression)
+                .WithMetadata("redisPort", redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Port).ValueExpression)
+                .WithMetadata("redisPassword", pubSubPassword.Resource)
+                .WaitFor(redis);
 
         var redisHost= redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Host);
         var redisPort = redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Port);
@@ -28,6 +38,10 @@ internal static class Dapr
                 ReferenceExpression.Create(
                     $"{redisHost}:{redisPort}"
                 )
+            )
+            .WithMetadata(
+                "redisPassword",
+                pubSubPassword.Resource
             )
             .WaitFor(redis);
         
@@ -52,7 +66,8 @@ internal static class Dapr
             {
                 sidecar.WithOptions(new DaprSidecarOptions
                 {
-                    AppId = "sales"
+                    AppId = "sales",
+                    AppProtocol = "http"
                 });
                 configureSidecar.Invoke(sidecar);
             })
