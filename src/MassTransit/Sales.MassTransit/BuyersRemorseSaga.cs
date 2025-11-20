@@ -27,7 +27,7 @@ public class BuyersRemorseSaga: ISaga,
         {
             CorrelationId = context.Message.CorrelationId;
             logger.LogInformation("🕛 Started Buyer's Remorse Saga for OrderId {OrderId}", CorrelationId);
-            await context.Redeliver(TimeSpan.FromSeconds(15));
+            await context.Redeliver(TimeSpan.FromSeconds(10));
         }
         else
         {

@@ -36,6 +36,7 @@ public class CustomerStatusPolicy : MassTransitStateMachine<CustomerStatus>
         
         DuringAny(
             Ignore(OrderAccepted),
+
             When(PaymentReceived)
                 .ThenAsync(async context => { await TrackOrder(logger, context); }),
 

@@ -1,6 +1,5 @@
 using Azure.Storage.Queues;
 using StorageQueues;
-using static System.Net.WebRequestMethods;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
