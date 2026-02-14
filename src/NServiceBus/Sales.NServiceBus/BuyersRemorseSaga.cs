@@ -23,6 +23,8 @@ public class BuyersRemorseSaga(ILogger<BuyersRemorseSaga> logger): Saga<BuyersRe
         mapper.MapSaga(m => m.OrderId)
             .ToMessage<OrderPlaced>(msg => msg.OrderId)
             .ToMessage<OrderCanceled>(msg => msg.OrderId);
+
+        mapper.ConfigureNotFoundHandler<OrderCanceledSagaNotFoundHandler>();
     }
 
     public async Task Handle(OrderPlaced message, IMessageHandlerContext context)
