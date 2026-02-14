@@ -18,6 +18,7 @@ internal static class Dapr
 
         var redis = builder
             .AddRedis("redis")
+            .WithRedisInsight()
             .WithPassword(pubSubPassword);
 
         var stateStore = builder
