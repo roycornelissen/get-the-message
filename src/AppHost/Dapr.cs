@@ -16,30 +16,28 @@ internal static class Dapr
             dapr.EnableTelemetry = true;
         });
 
+#pragma warning disable ASPIRECERTIFICATES001
         var redis = builder
             .AddRedis("redis")
             .WithRedisInsight()
-            .WithPassword(pubSubPassword);
+            .WithPassword(pubSubPassword)
+            .WithoutHttpsCertificate();
+#pragma warning restore ASPIRECERTIFICATES001
+
+        var redisEndpoint = redis.GetEndpoint("tcp");
+        var redisHostPort = ReferenceExpression.Create(
+            $"{redisEndpoint.Property(EndpointProperty.Host)}:{redisEndpoint.Property(EndpointProperty.Port)}");
 
         var stateStore = builder
-                .AddDaprStateStore("statestore")
+                .AddDaprComponent("statestore", "state.redis")
                 .WithMetadata("actorStateStore", "true")
-                .WithMetadata("redisHost", redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Host).ValueExpression)
-                .WithMetadata("redisPort", redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Port).ValueExpression)
+                .WithMetadata("redisHost", redisHostPort)
                 .WithMetadata("redisPassword", pubSubPassword.Resource)
                 .WaitFor(redis);
 
-        var redisHost= redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Host);
-        var redisPort = redis.Resource.PrimaryEndpoint.Property(EndpointProperty.Port);
-
         var pubSub = builder
             .AddDaprPubSub("pubsub")
-            .WithMetadata(
-                "redisHost",
-                ReferenceExpression.Create(
-                    $"{redisHost}:{redisPort}"
-                )
-            )
+            .WithMetadata("redisHost", redisHostPort)
             .WithMetadata(
                 "redisPassword",
                 pubSubPassword.Resource
