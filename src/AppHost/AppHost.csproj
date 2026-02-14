@@ -16,6 +16,7 @@
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="13.1.1" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="13.1.1" />
     <PackageReference Include="CommunityToolkit.Aspire.Hosting.Dapr" Version="13.0.0" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.PapercutSmtp" Version="13.1.1" />
     <PackageReference Include="Scalar.Aspire" Version="0.8.49" />
   </ItemGroup>
 

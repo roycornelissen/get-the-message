@@ -5,14 +5,16 @@ namespace AppHost;
 
 internal static class NServiceBus
 {
-    public static void RunNServiceBus(this IDistributedApplicationBuilder builder, IResourceBuilder<IResourceWithConnectionString> serviceBusConnection)
+    public static void RunNServiceBus(this IDistributedApplicationBuilder builder, IResourceBuilder<IResourceWithConnectionString> serviceBusConnection, IResourceBuilder<PapercutSmtpContainerResource> papercut)
     {
         var sales = builder
             .AddProject<Sales_NServiceBus>("Sales")
             .WithUrl("/swagger")
             .WithEnvironment("CustomerServiceAgent:ApiKey", builder.Configuration["CustomerServiceAgent:ApiKey"])
-            .WithReference(serviceBusConnection);
-        
+            .WithReference(serviceBusConnection)
+            .WithReference(papercut)
+            .WaitFor(papercut);
+
         var shipping = builder
             .AddProject<Shipping_NServiceBus>("Shipping")
             .WithUrl("/swagger")

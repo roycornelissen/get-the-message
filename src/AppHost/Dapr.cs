@@ -1,4 +1,3 @@
-using Aspire.Hosting;
 using CommunityToolkit.Aspire.Hosting.Dapr;
 using Projects;
 using Scalar.Aspire;
@@ -7,7 +6,7 @@ namespace AppHost;
 
 internal static class Dapr
 {
-    public static void RunDaprWithRedis(this IDistributedApplicationBuilder builder)
+    public static void RunDaprWithRedis(this IDistributedApplicationBuilder builder, IResourceBuilder<PapercutSmtpContainerResource> papercut)
     {
         var pubSubPassword = builder.AddParameter("pubsub-password", secret: true);
 
@@ -44,7 +43,7 @@ internal static class Dapr
             )
             .WaitFor(redis);
         
-        RunApps(builder, redis, sidecar =>
+        RunApps(builder, redis, papercut, sidecar =>
         {
             sidecar
                 .WithReference(stateStore)
@@ -56,6 +55,7 @@ internal static class Dapr
     private static void RunApps(
         IDistributedApplicationBuilder builder,
         IResourceBuilder<IResource> brokerDependency,
+        IResourceBuilder<PapercutSmtpContainerResource> papercut,
         Action<IResourceBuilder<IDaprSidecarResource>> configureSidecar)
     {
         var sales = builder.AddProject<Sales_Dapr>("Sales")
@@ -70,7 +70,9 @@ internal static class Dapr
                 });
                 configureSidecar.Invoke(sidecar);
             })
-            .WaitFor(brokerDependency);
+            .WithReference(papercut)
+            .WaitFor(brokerDependency)
+            .WaitFor(papercut);
 
         var billing = builder.AddProject<Billing_Dapr>("Billing")
             .WithExternalHttpEndpoints()

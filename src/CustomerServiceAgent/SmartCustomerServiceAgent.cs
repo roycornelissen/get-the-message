@@ -1,10 +1,15 @@
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 
 namespace CustomerServiceAgent;
 
-public class SmartCustomerServiceAgent(ILogger<SmartCustomerServiceAgent> logger, [FromKeyedServices("customer-service")]AIAgent agent): ICustomerServiceAgent
+public class SmartCustomerServiceAgent(
+    ILogger<SmartCustomerServiceAgent> logger,
+    [FromKeyedServices("customer-service")]AIAgent agent,
+    IConfiguration configuration): ICustomerServiceAgent
 {
     public async Task SendWelcomeEmail(string emailAddress, string name, CancellationToken cancellationToken)
     {
@@ -23,5 +28,24 @@ public class SmartCustomerServiceAgent(ILogger<SmartCustomerServiceAgent> logger
         var response = await agent.RunAsync(prompt, cancellationToken: cancellationToken);
         
         logger.LogInformation("To: {EmailAddress}:\n{EmailContent}", emailAddress, response.Text);
+
+        var message = new MimeMessage();
+
+        message.From.Add(new MailboxAddress("Customer Service", "customerservice@get-the-message.com"));
+
+        message.To.Add(MailboxAddress.Parse(emailAddress));
+
+        message.Subject = "Welcome to Preferred Status!";
+
+        message.Body = new TextPart("plain")
+        {
+            Text = response.Text
+        };
+
+        var factory = new SmtpClientFactory(configuration);
+        using var client = await factory.CreateAsync(cancellationToken);
+
+        await client.SendAsync(message, cancellationToken);
+        await client.DisconnectAsync(true, cancellationToken);
     }
 }

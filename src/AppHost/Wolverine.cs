@@ -6,13 +6,15 @@ namespace AppHost;
 internal static class Wolverine
 {
     public static void RunWolverine(this IDistributedApplicationBuilder builder,
-        IResourceBuilder<IResourceWithConnectionString> serviceBusConnection)
+        IResourceBuilder<IResourceWithConnectionString> serviceBusConnection, IResourceBuilder<PapercutSmtpContainerResource> papercut)
     {
         var sales = builder
             .AddProject<Sales_Wolverine>("Sales")
             .WithUrl("/swagger")
             .WithEnvironment("CustomerServiceAgent:ApiKey", builder.Configuration["CustomerServiceAgent:ApiKey"])
-            .WithReference(serviceBusConnection);
+            .WithReference(serviceBusConnection)
+            .WithReference(papercut)
+            .WaitFor(papercut);
 
         var shipping = builder
             .AddProject<Shipping_Wolverine>("Shipping")
