@@ -86,10 +86,10 @@ public class CustomerStatusPolicy : MassTransitStateMachine<CustomerStatus>
             }, context.CancellationToken);
     }
 
-    public State Regular { get; private set; }
-    public State Preferred { get; private set; }
+    public State Regular { get; private set; } = null!;
+    public State Preferred { get; private set; } = null!;
 
-    public Event<OrderAccepted> OrderAccepted { get; private set; }
-    public Event<PaymentReceived> PaymentReceived { get; private set; }
-    public Event<AmountExpired> AmountExpired { get; private set; }
+    public Event<OrderAccepted> OrderAccepted { get; private set; } = null!;
+    public Event<PaymentReceived> PaymentReceived { get; private set; } = null!;
+    public Event<AmountExpired> AmountExpired { get; private set; } = null!;
 }

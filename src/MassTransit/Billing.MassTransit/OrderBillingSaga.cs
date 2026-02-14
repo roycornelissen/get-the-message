@@ -49,8 +49,8 @@ public class OrderBillingSaga : MassTransitStateMachine<OrderBillingState>
         );
     }
     
-    public State Waiting { get; private set; }
+    public State Waiting { get; private set; } = null!;
     
-    public Event<OrderAccepted> OrderAccepted { get; private set; }
-    public Event<ProcessPayment> ProcessPayment { get; private set; }
+    public Event<OrderAccepted> OrderAccepted { get; private set; } = null!;
+    public Event<ProcessPayment> ProcessPayment { get; private set; } = null!;
 }
