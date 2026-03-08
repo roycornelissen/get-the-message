@@ -12,6 +12,7 @@ internal static class MassTransit
             .AddProject<Sales_MassTransit>("Sales")
             .WithUrl("/swagger")
             .WithEnvironment("CustomerServiceAgent:ApiKey", builder.Configuration["CustomerServiceAgent:ApiKey"])
+            .WithEnvironment("CustomerServiceAgent:InferenceEndpoint", builder.Configuration["CustomerServiceAgent:InferenceEndpoint"])
             .WithReference(serviceBusConnection)
             .WithReference(papercut)
             .WaitFor(papercut);

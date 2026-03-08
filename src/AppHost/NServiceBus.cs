@@ -11,6 +11,7 @@ internal static class NServiceBus
             .AddProject<Sales_NServiceBus>("Sales")
             .WithUrl("/swagger")
             .WithEnvironment("CustomerServiceAgent:ApiKey", builder.Configuration["CustomerServiceAgent:ApiKey"])
+            .WithEnvironment("CustomerServiceAgent:InferenceEndpoint", builder.Configuration["CustomerServiceAgent:InferenceEndpoint"])
             .WithReference(serviceBusConnection)
             .WithReference(papercut)
             .WaitFor(papercut);

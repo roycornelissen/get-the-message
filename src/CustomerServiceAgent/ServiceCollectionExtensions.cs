@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddKeyedScoped<AIAgent>("customer-service", (_, name) =>
         {
             var model = "openai/gpt-4o";
-            var endpoint = "https://models.github.ai/orgs/Xebia/inference";
+            var endpoint = configuration["CustomerServiceAgent:InferenceEndpoint"] ?? throw new InvalidOperationException("Configure an endpoint for AI inference");
 
             var chatClient = new ChatClient(model, new ApiKeyCredential(apiKey), new OpenAIClientOptions
             {

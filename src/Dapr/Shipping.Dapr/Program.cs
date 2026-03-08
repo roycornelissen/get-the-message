@@ -49,9 +49,9 @@ app.MapPost("/order-accepted", [Topic("pubsub", "order-accepted")] async (DaprWo
 
 app.MapPost("/payment-received", [Topic("pubsub", "payment-received")] async (DaprWorkflowClient workflowClient, DaprClient daprClient, ILogger<PaymentReceived> logger, PaymentReceived payment, CancellationToken cancellationToken) =>
 {
-    var workflowState = await workflowClient.GetWorkflowStateAsync(payment.OrderId.ToString(), true);
+    var workflowState = await workflowClient.GetWorkflowStateAsync(payment.OrderId.ToString(), true, cancellationToken);
 
-    if (workflowState.Exists)
+    if (workflowState?.Exists == true)
     {
         await workflowClient.RaiseEventAsync(payment.OrderId.ToString(), nameof(PaymentReceived), payment,
             cancellationToken);
