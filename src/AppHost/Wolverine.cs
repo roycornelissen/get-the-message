@@ -1,5 +1,4 @@
 using Projects;
-using Scalar.Aspire;
 
 namespace AppHost;
 
@@ -26,11 +25,5 @@ internal static class Wolverine
             .AddProject<Billing_Wolverine>("Billing")
             .WithUrl("/swagger")
             .WithReference(serviceBusConnection);
-
-        builder
-            .AddScalarApiReference()
-            .WithApiReference(sales)
-            .WithApiReference(shipping)
-            .WithApiReference(billing);
     }
 }

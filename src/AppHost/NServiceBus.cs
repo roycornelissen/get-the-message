@@ -1,5 +1,4 @@
 using Projects;
-using Scalar.Aspire;
 
 namespace AppHost;
 
@@ -25,11 +24,5 @@ internal static class NServiceBus
             .AddProject<Billing_NServiceBus>("Billing")
             .WithUrl("/swagger")
             .WithReference(serviceBusConnection);
-
-        builder
-            .AddScalarApiReference()
-            .WithApiReference(sales)
-            .WithApiReference(shipping)
-            .WithApiReference(billing);
     }
 }

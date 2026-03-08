@@ -1,6 +1,5 @@
 using CommunityToolkit.Aspire.Hosting.Dapr;
 using Projects;
-using Scalar.Aspire;
 
 namespace AppHost;
 
@@ -99,12 +98,5 @@ internal static class Dapr
                 configureSidecar.Invoke(sidecar);
             })
             .WaitFor(brokerDependency);
-
-        builder
-            .AddScalarApiReference()
-            .WithApiReference(sales)
-            .WithApiReference(shipping)
-            .WithApiReference(billing);
-
     }
 }
