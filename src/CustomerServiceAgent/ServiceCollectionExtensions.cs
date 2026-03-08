@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
                 Endpoint = new Uri(endpoint)
             });
 
-            return chatClient.CreateAIAgent("You are a helpful customer service assistant that composes personalized welcome emails for new preferred customers. Your tone is warm and friendly.", name: (string)name!);
+            return chatClient.AsAIAgent("You are a helpful customer service assistant that composes personalized welcome emails for new preferred customers. Your tone is warm and friendly.", name: (string)name!);
         });
         services.AddScoped<ICustomerServiceAgent, SmartCustomerServiceAgent>();
         return services;
