@@ -1,5 +1,4 @@
-﻿
-using Azure.Storage.Queues;
+﻿using Azure.Storage.Queues;
 using Messages.Events;
 using System.Text.Json;
 

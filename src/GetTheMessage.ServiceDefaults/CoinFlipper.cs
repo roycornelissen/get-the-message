@@ -4,6 +4,6 @@ public static class CoinFlipper
 {
     public static bool FlipCoin()
     {
-        return new Random().Next(2) == 0;
+        return new Random().Next(3) == 0;
     }
 }
