@@ -15,7 +15,6 @@ var routing = endpointConfiguration.UseTransport<AzureServiceBusTransport>(build
 //endpointConfiguration.UseTransport<AzureServiceBusTransport>("sbns-get-the-message.servicebus.windows.net", new DefaultAzureCredential(), TopicTopology.Default);
   
 endpointConfiguration.UsePersistence<LearningPersistence>();
-endpointConfiguration.UniquelyIdentifyRunningInstance();
 
 endpointConfiguration.ApplyNamespaceConventions();
 endpointConfiguration.ConnectToServicePlatform();
