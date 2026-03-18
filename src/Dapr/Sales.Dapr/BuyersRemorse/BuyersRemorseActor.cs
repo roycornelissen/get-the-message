@@ -22,7 +22,7 @@ public class BuyersRemorseActor(ActorHost host, DaprClient daprClient):
         Logger.LogInformation("🕛 Started Buyer's Remorse Saga for OrderId {OrderId}", message.OrderId);
 
         await StateManager.SetStateAsync(_stateDataKey, message, cancellationToken);
-        await RegisterReminderAsync(_waitExpiredReminder, [], TimeSpan.FromSeconds(30), TimeSpan.FromMilliseconds(-1));
+        await RegisterReminderAsync(_waitExpiredReminder, [], TimeSpan.FromSeconds(10), TimeSpan.FromMilliseconds(-1));
     }
 
     public async Task CancelOrder(CancellationToken cancellationToken)
