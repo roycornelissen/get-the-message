@@ -47,25 +47,66 @@ app.MapPost("/order-accepted", [Topic("pubsub", "order-accepted")] async (DaprWo
     return Results.Ok(order);
 });
 
-app.MapPost("/payment-received", [Topic("pubsub", "payment-received")] async (DaprWorkflowClient workflowClient, DaprClient daprClient, ILogger<PaymentReceived> logger, PaymentReceived payment, CancellationToken cancellationToken) =>
+app.MapPost("/payment-received", [Topic("pubsub", "payment-received")] async (
+    DaprWorkflowClient workflowClient,
+    DaprClient daprClient,
+    ILogger<PaymentReceived> logger,
+    PaymentReceived payment,
+    CancellationToken cancellationToken) =>
 {
-    var workflowState = await workflowClient.GetWorkflowStateAsync(payment.OrderId.ToString(), true, cancellationToken);
+    var workflowId = payment.OrderId.ToString();
+    var workflowState = await workflowClient.GetWorkflowStateAsync(workflowId, true, cancellationToken);
 
-    if (workflowState?.Exists == true)
+    if (workflowState?.Exists != true)
     {
-        await workflowClient.RaiseEventAsync(payment.OrderId.ToString(), nameof(PaymentReceived), payment,
-            cancellationToken);
-        var state = await workflowClient.WaitForWorkflowCompletionAsync(payment.OrderId.ToString(), true,
-            cancellationToken);
+        logger.LogWarning("No workflow found for order {OrderId} to receive payment.", payment.OrderId);
+        return Results.NotFound();
+    }
 
+    await workflowClient.RaiseEventAsync(workflowId, nameof(PaymentReceived), payment, cancellationToken);
+
+    // Waits until workflow is terminal (this allows activity retries to happen first).
+    var state = await workflowClient.WaitForWorkflowCompletionAsync(workflowId, true, cancellationToken);
+
+    if (state.RuntimeStatus == WorkflowRuntimeStatus.Completed)
+    {
         var @event = state.ReadOutputAs<OrderShipped>();
-        await daprClient.PublishEventAsync("pubsub", "order-shipped", @event, cancellationToken);
+        if (@event is null)
+        {
+            logger.LogError("Workflow {WorkflowId} completed but produced no output.", workflowId);
+            return Results.Problem(
+                title: "Workflow completed without output",
+                detail: $"Workflow '{workflowId}' completed but output was null.",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
 
+        await daprClient.PublishEventAsync("pubsub", "order-shipped", @event, cancellationToken);
         return Results.Accepted();
     }
-    
-    logger.LogWarning("No workflow found for order {OrderId} to receive payment.", payment.OrderId);
-    return Results.NotFound();
+
+    if (state.RuntimeStatus is WorkflowRuntimeStatus.Failed
+        or WorkflowRuntimeStatus.Terminated
+        or WorkflowRuntimeStatus.Canceled)
+    {
+        logger.LogError(
+            "Workflow {WorkflowId} ended in terminal error state {Status}.",
+            workflowId,
+            state.RuntimeStatus);
+
+        // Non-2xx => Dapr can redeliver payment-received based on pubsub retry policy.
+        return Results.Problem(
+            title: "Workflow failed",
+            detail: $"Workflow '{workflowId}' ended with status '{state.RuntimeStatus}'.",
+            statusCode: StatusCodes.Status500InternalServerError);
+    }
+
+    // Defensive fallback (should be rare after WaitForWorkflowCompletionAsync).
+    logger.LogWarning(
+        "Workflow {WorkflowId} returned unexpected status {Status}.",
+        workflowId,
+        state.RuntimeStatus);
+
+    return Results.Accepted();
 });
 
 app.MapPost("/order-shipped", [Topic("pubsub", "order-shipped")] (OrderShipped message, ILogger<OrderShipped> logger) =>
