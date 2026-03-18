@@ -1,5 +1,6 @@
 using Azure.Storage.Queues;
 using StorageQueues;
+using System.Text.Json;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -39,7 +40,7 @@ app.MapGet("/place-order", async (QueueClient queueClient) => {
         Amount = new Random().Next(100, 1000)
     };
 
-    await queueClient.SendMessageAsync(System.Text.Json.JsonSerializer.Serialize(message));
+    await queueClient.SendMessageAsync(JsonSerializer.Serialize(message));
 });
 
 app.Run();
